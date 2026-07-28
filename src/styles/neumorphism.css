@@ -85,6 +85,7 @@ body {
   border-radius: var(--border-radius-lg);
   padding: 24px;
   max-width: 100%;
+  box-sizing: border-box;
 }
 
 .neu-card-sm {
@@ -93,6 +94,7 @@ body {
   border-radius: var(--border-radius-md);
   padding: 16px;
   max-width: 100%;
+  box-sizing: border-box;
 }
 
 .neu-inset {
@@ -101,6 +103,7 @@ body {
   border-radius: var(--border-radius-md);
   padding: 16px;
   max-width: 100%;
+  box-sizing: border-box;
 }
 
 .neu-btn {
@@ -119,6 +122,7 @@ body {
   gap: 8px;
   outline: none;
   user-select: none;
+  box-sizing: border-box;
 }
 
 .neu-btn:hover {
@@ -286,25 +290,37 @@ body {
 }
 
 @media (max-width: 640px) {
+  :root {
+    --neu-flat: 4px 4px 10px rgba(163, 177, 198, 0.6), -4px -4px 10px rgba(255, 255, 255, 0.8);
+    --neu-flat-sm: 3px 3px 6px rgba(163, 177, 198, 0.5), -3px -3px 6px rgba(255, 255, 255, 0.8);
+    --neu-inset: inset 3px 3px 6px rgba(163, 177, 198, 0.6), inset -3px -3px 6px rgba(255, 255, 255, 0.8);
+  }
+
+  [data-theme="dark"] {
+    --neu-flat: 4px 4px 10px #121315, -4px -4px 10px #1e1f23;
+    --neu-flat-sm: 3px 3px 6px #121315, -3px -3px 6px #1e1f23;
+    --neu-inset: inset 3px 3px 6px #121315, inset -3px -3px 6px #1e1f23;
+  }
+
   .main-content {
-    padding: 12px;
+    padding: 12px 16px !important;
     gap: 12px;
   }
 
   .neu-card {
-    padding: 16px 12px;
+    padding: 18px 14px !important;
     border-radius: var(--border-radius-md);
   }
 
   .neu-card-sm, .neu-inset {
-    padding: 12px 10px;
+    padding: 14px 12px !important;
   }
 
   header {
-    padding: 12px 16px !important;
+    padding: 12px 14px !important;
   }
 
-  h1, h2 {
+  h1, h2, h3, h4, p, span, div {
     word-break: break-word;
   }
 }
