@@ -3,35 +3,36 @@ import { Sun, Moon, Coffee, Sparkles, Heart, Menu, X } from 'lucide-react';
 
 export default function Header({ theme, toggleTheme, onOpenUpiModal, isMobileMenuOpen, toggleMobileMenu }) {
   return (
-    <header className="neu-card" style={{ borderRadius: '0 0 24px 24px', padding: '14px 20px', marginBottom: '20px' }}>
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '12px' }}>
+    <header className="neu-card" style={{ borderRadius: '0 0 24px 24px', padding: '12px 16px', marginBottom: '16px' }}>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'nowrap', gap: '8px' }}>
         
         {/* Left: Mobile Menu Toggle & Brand Logo */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
           <button 
             className="neu-btn neu-btn-icon mobile-only" 
             onClick={toggleMobileMenu}
             title="Toggle Tools Menu"
             aria-label="Toggle Navigation Menu"
+            style={{ width: '40px', height: '40px', minWidth: '40px' }}
           >
-            {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+            {isMobileMenuOpen ? <X size={18} /> : <Menu size={18} />}
           </button>
 
-          <div className="neu-badge" style={{ padding: '8px', borderRadius: '14px' }}>
-            <Sparkles size={20} color="var(--primary-color)" />
+          <div className="neu-badge" style={{ padding: '6px', borderRadius: '12px' }}>
+            <Sparkles size={18} color="var(--primary-color)" />
           </div>
           <div>
-            <h1 style={{ fontSize: '1.25rem', fontWeight: '800', letterSpacing: '-0.5px', lineHeight: '1.2' }}>
+            <h1 style={{ fontSize: '1.15rem', fontWeight: '800', letterSpacing: '-0.5px', lineHeight: '1.1' }}>
               NeumoStudio <span style={{ color: 'var(--primary-color)' }}>AI</span>
             </h1>
-            <p style={{ fontSize: '0.72rem', color: 'var(--text-muted)', fontWeight: '500' }}>
+            <p style={{ fontSize: '0.68rem', color: 'var(--text-muted)', fontWeight: '500', display: 'none' }} className="desktop-only">
               100% Free All-In-One Visual Studio
             </p>
           </div>
         </div>
 
         {/* Right Action Buttons: Theme Toggle & UPI Coffee Donation */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginLeft: 'auto' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
           
           {/* Free Badge (Desktop Only) */}
           <span className="neu-badge desktop-only">
@@ -44,6 +45,7 @@ export default function Header({ theme, toggleTheme, onOpenUpiModal, isMobileMen
             onClick={toggleTheme} 
             title="Toggle Light/Dark Theme"
             aria-label="Toggle Theme"
+            style={{ width: '40px', height: '40px', minWidth: '40px' }}
           >
             {theme === 'light' ? <Moon size={18} color="var(--primary-color)" /> : <Sun size={18} color="#f59e0b" />}
           </button>
@@ -52,10 +54,11 @@ export default function Header({ theme, toggleTheme, onOpenUpiModal, isMobileMen
           <button 
             className="neu-btn neu-btn-primary" 
             onClick={onOpenUpiModal}
-            style={{ padding: '8px 14px', fontSize: '0.85rem', background: 'linear-gradient(135deg, #f59e0b, #ef4444)' }}
+            style={{ padding: '8px 12px', fontSize: '0.8rem', background: 'linear-gradient(135deg, #f59e0b, #ef4444)', minHeight: '40px' }}
+            title="Support via UPI Donation"
           >
             <Coffee size={16} />
-            <span>Donate ☕</span>
+            <span className="donate-btn-text">Donate ☕</span>
           </button>
         </div>
 
