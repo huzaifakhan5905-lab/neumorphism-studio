@@ -1,0 +1,269 @@
+/* Neumorphism UI Design System (Light & Dark Themes) */
+:root {
+  /* Light Theme Variables */
+  --bg-color: #e0e5ec;
+  --text-main: #2d3748;
+  --text-muted: #718096;
+  --primary-color: #4f46e5;
+  --primary-hover: #4338ca;
+  --accent-color: #10b981;
+  --danger-color: #ef4444;
+
+  /* Neumorphic Shadow Tokens (Light) */
+  --neu-flat: 9px 9px 16px rgba(163, 177, 198, 0.6), -9px -9px 16px rgba(255, 255, 255, 0.8);
+  --neu-flat-sm: 5px 5px 10px rgba(163, 177, 198, 0.5), -5px -5px 10px rgba(255, 255, 255, 0.8);
+  --neu-flat-hover: 12px 12px 20px rgba(163, 177, 198, 0.7), -12px -12px 20px rgba(255, 255, 255, 0.9);
+  --neu-pressed: inset 6px 6px 12px rgba(163, 177, 198, 0.7), inset -6px -6px 12px rgba(255, 255, 255, 0.9);
+  --neu-inset: inset 5px 5px 10px rgba(163, 177, 198, 0.6), inset -5px -5px 10px rgba(255, 255, 255, 0.8);
+  
+  --card-bg: #e0e5ec;
+  --border-radius-lg: 24px;
+  --border-radius-md: 16px;
+  --border-radius-sm: 10px;
+}
+
+[data-theme="dark"] {
+  /* Dark Theme Variables */
+  --bg-color: #18191c;
+  --text-main: #e2e8f0;
+  --text-muted: #94a3b8;
+  --primary-color: #6366f1;
+  --primary-hover: #818cf8;
+  --accent-color: #34d399;
+  --danger-color: #f87171;
+
+  /* Neumorphic Shadow Tokens (Dark) */
+  --neu-flat: 8px 8px 16px #121315, -8px -8px 16px #1e1f23;
+  --neu-flat-sm: 4px 4px 8px #121315, -4px -4px 8px #1e1f23;
+  --neu-flat-hover: 12px 12px 20px #0f1012, -12px -12px 20px #212226;
+  --neu-pressed: inset 4px 4px 8px #121315, inset -4px -4px 8px #1e1f23;
+  --neu-inset: inset 5px 5px 10px #121315, inset -5px -5px 10px #1e1f23;
+  
+  --card-bg: #18191c;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-main);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-color);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--text-muted);
+  border-radius: 4px;
+}
+
+/* Neumorphic Base Components */
+.neu-card {
+  background: var(--card-bg);
+  box-shadow: var(--neu-flat);
+  border-radius: var(--border-radius-lg);
+  padding: 24px;
+}
+
+.neu-card-sm {
+  background: var(--card-bg);
+  box-shadow: var(--neu-flat-sm);
+  border-radius: var(--border-radius-md);
+  padding: 16px;
+}
+
+.neu-inset {
+  background: var(--card-bg);
+  box-shadow: var(--neu-inset);
+  border-radius: var(--border-radius-md);
+  padding: 16px;
+}
+
+.neu-btn {
+  background: var(--card-bg);
+  box-shadow: var(--neu-flat-sm);
+  border: none;
+  border-radius: var(--border-radius-md);
+  padding: 12px 20px;
+  color: var(--text-main);
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  outline: none;
+  user-select: none;
+}
+
+.neu-btn:hover {
+  box-shadow: var(--neu-flat-hover);
+  transform: translateY(-1px);
+}
+
+.neu-btn:active, .neu-btn.active {
+  box-shadow: var(--neu-pressed);
+  transform: translateY(0);
+  color: var(--primary-color);
+}
+
+.neu-btn-primary {
+  background: var(--primary-color);
+  color: #ffffff !important;
+  box-shadow: 6px 6px 12px rgba(79, 70, 229, 0.4), -6px -6px 12px rgba(255, 255, 255, 0.5);
+  border-radius: var(--border-radius-md);
+}
+.neu-btn-primary:hover {
+  background: var(--primary-hover);
+  box-shadow: 8px 8px 16px rgba(79, 70, 229, 0.5), -8px -8px 16px rgba(255, 255, 255, 0.6);
+}
+
+.neu-btn-accent {
+  background: var(--accent-color);
+  color: #ffffff !important;
+  box-shadow: 6px 6px 12px rgba(16, 185, 129, 0.4);
+}
+
+.neu-btn-icon {
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border-radius: 50%;
+}
+
+.neu-input, .neu-select, .neu-textarea {
+  width: 100%;
+  background: var(--card-bg);
+  box-shadow: var(--neu-inset);
+  border: none;
+  border-radius: var(--border-radius-md);
+  padding: 14px 18px;
+  color: var(--text-main);
+  font-size: 0.95rem;
+  outline: none;
+}
+
+.neu-input:focus, .neu-select:focus, .neu-textarea:focus {
+  box-shadow: var(--neu-inset), 0 0 0 2px var(--primary-color);
+}
+
+.neu-slider {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 10px;
+  border-radius: 5px;
+  background: var(--card-bg);
+  box-shadow: var(--neu-inset);
+  outline: none;
+}
+
+.neu-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--primary-color);
+  box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  transition: transform 0.1s ease;
+}
+
+.neu-slider::-webkit-slider-thumb:hover {
+  transform: scale(1.15);
+}
+
+/* Badge & Tag */
+.neu-badge {
+  background: var(--card-bg);
+  box-shadow: var(--neu-flat-sm);
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--primary-color);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Modal Overlay */
+.neu-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(8px);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  animation: fadeIn 0.2s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+/* Layout Utilities */
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.main-content {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 28px;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 24px;
+  width: 100%;
+}
+
+.mobile-only {
+  display: none !important;
+}
+
+@media (max-width: 1024px) {
+  .main-content {
+    grid-template-columns: 1fr;
+    padding: 16px;
+  }
+
+  .mobile-only {
+    display: inline-flex !important;
+  }
+
+  .desktop-only {
+    display: none !important;
+  }
+
+  .sidebar-nav {
+    display: none;
+  }
+
+  .sidebar-nav.mobile-visible {
+    display: block;
+    margin-bottom: 20px;
+    animation: fadeIn 0.2s ease-out;
+  }
+}
