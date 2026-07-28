@@ -1,7 +1,7 @@
 import React from 'react';
-import { Sun, Moon, Heart, Menu, X } from 'lucide-react';
+import { Sun, Moon, Heart, Gift, Menu, X } from 'lucide-react';
 
-export default function Header({ theme, toggleTheme, isMobileMenuOpen, toggleMobileMenu }) {
+export default function Header({ theme, toggleTheme, onOpenUpiModal, isMobileMenuOpen, toggleMobileMenu }) {
   return (
     <header className="neu-card" style={{ borderRadius: '0 0 24px 24px', padding: '12px 16px', marginBottom: '16px' }}>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'nowrap', gap: '8px' }}>
@@ -35,11 +35,11 @@ export default function Header({ theme, toggleTheme, isMobileMenuOpen, toggleMob
           </div>
         </div>
 
-        {/* Right Action Buttons: Theme Toggle & Free Badge */}
+        {/* Right Action Buttons: Theme Toggle & Restored Donate Button */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
           
-          {/* Free Badge */}
-          <span className="neu-badge">
+          {/* Free Badge (Desktop Only) */}
+          <span className="neu-badge desktop-only">
             <Heart size={14} color="#ef4444" fill="#ef4444" /> 100% Free
           </span>
 
@@ -52,6 +52,17 @@ export default function Header({ theme, toggleTheme, isMobileMenuOpen, toggleMob
             style={{ width: '40px', height: '40px', minWidth: '40px' }}
           >
             {theme === 'light' ? <Moon size={18} color="var(--primary-color)" /> : <Sun size={18} color="#f59e0b" />}
+          </button>
+
+          {/* Restored Donate Button */}
+          <button 
+            className="neu-btn neu-btn-primary" 
+            onClick={onOpenUpiModal}
+            style={{ padding: '8px 14px', fontSize: '0.82rem', background: 'linear-gradient(135deg, #f59e0b, #ef4444)', minHeight: '40px' }}
+            title="Support via UPI Donation"
+          >
+            <Gift size={16} />
+            <span className="donate-btn-text">Donate</span>
           </button>
         </div>
 

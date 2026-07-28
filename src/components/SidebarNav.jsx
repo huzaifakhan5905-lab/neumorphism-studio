@@ -13,6 +13,7 @@ import {
   FileCheck, 
   Lock, 
   Hash, 
+  Gift,
   X,
   Sparkles
 } from 'lucide-react';
@@ -34,7 +35,7 @@ const TOOLS = [
   { id: 'watermark', label: 'Watermark Creator', icon: Type },
 ];
 
-export default function SidebarNav({ activeTool, setActiveTool, closeMobileMenu, isMobileMenuOpen }) {
+export default function SidebarNav({ activeTool, setActiveTool, onOpenUpiModal, closeMobileMenu, isMobileMenuOpen }) {
   
   const renderNavContent = () => (
     <>
@@ -72,6 +73,25 @@ export default function SidebarNav({ activeTool, setActiveTool, closeMobileMenu,
           );
         })}
       </nav>
+
+      {/* Support Card in Sidebar */}
+      <div className="neu-inset" style={{ marginTop: '20px', textAlign: 'center', borderRadius: '16px' }}>
+        <Gift size={24} color="#f59e0b" style={{ margin: '0 auto 6px auto' }} />
+        <h4 style={{ fontSize: '0.88rem', fontWeight: '700', marginBottom: '4px' }}>Enjoying NeumoStudio?</h4>
+        <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginBottom: '10px' }}>
+          Help us keep all tools 100% free with a small tip!
+        </p>
+        <button 
+          className="neu-btn neu-btn-primary" 
+          onClick={() => {
+            if (closeMobileMenu) closeMobileMenu();
+            if (onOpenUpiModal) onOpenUpiModal();
+          }} 
+          style={{ width: '100%', fontSize: '0.8rem', padding: '8px 12px' }}
+        >
+          🎁 Donate via UPI
+        </button>
+      </div>
     </>
   );
 
