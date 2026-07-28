@@ -312,6 +312,30 @@ img, canvas, video, svg {
   animation: slideRight 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
+/* Item 4: High Precision Mobile Print Rules */
+@media print {
+  body {
+    background: #ffffff !important;
+    color: #000000 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+  header, footer, nav, .mobile-tool-bar, .sidebar-nav-desktop, .neu-badge, .mobile-only, button {
+    display: none !important;
+  }
+  .main-content {
+    display: block !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    max-width: 100% !important;
+  }
+  .neu-card {
+    box-shadow: none !important;
+    padding: 0 !important;
+    background: transparent !important;
+  }
+}
+
 /* Comprehensive Responsive Breakpoints */
 @media (max-width: 1024px) {
   .main-content {

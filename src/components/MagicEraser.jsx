@@ -99,6 +99,9 @@ export default function MagicEraser() {
 
   const handlePointerDown = (e) => {
     if (!imageSrc || erasedResult) return;
+    if (e.cancelable && e.type.startsWith('touch')) {
+      e.preventDefault();
+    }
     isDrawingRef.current = true;
     const coords = getCanvasCoords(e);
     lastPosRef.current = coords;
@@ -107,6 +110,9 @@ export default function MagicEraser() {
 
   const handlePointerMove = (e) => {
     if (!isDrawingRef.current || !imageSrc || erasedResult) return;
+    if (e.cancelable && e.type.startsWith('touch')) {
+      e.preventDefault();
+    }
     const coords = getCanvasCoords(e);
     drawStroke(lastPosRef.current, coords);
     lastPosRef.current = coords;
@@ -194,7 +200,7 @@ export default function MagicEraser() {
       ) : (
         <div>
           {/* Controls */}
-          <div style={{ display: 'flex', gap: '16px', alignItems: 'center', marginBottom: '16px', flexWrap: 'wrap' }}>
+          <div style={{ display: 'flex', gap: '16px', alignItems: 'center', marginBottom: '16px', flexWrap: 'wrap' }} className="btn-group-responsive">
             <div className="neu-card-sm" style={{ flex: 1, minWidth: '200px' }}>
               <label style={{ fontSize: '0.8rem', fontWeight: '700', marginBottom: '6px', display: 'flex', alignItems: 'center', gap: '6px' }}>
                 <Eraser size={16} /> Brush Size ({brushSize}px)
@@ -221,7 +227,7 @@ export default function MagicEraser() {
             className="neu-inset" 
             style={{ 
               textAlign: 'center', 
-              padding: '16px', 
+              padding: '12px', 
               borderRadius: '20px', 
               marginBottom: '20px', 
               position: 'relative',
@@ -229,26 +235,30 @@ export default function MagicEraser() {
             }}
           >
             <p style={{ fontSize: '0.8rem', color: 'var(--primary-color)', marginBottom: '8px', fontWeight: '700' }}>
-              🎨 Click & drag over the object/watermark to paint RED highlight:
+              🎨 Touch & drag over object to paint RED highlight:
             </p>
 
             {erasedResult ? (
               <img src={erasedResult} alt="Erased Result" style={{ width: '100%', maxHeight: '440px', objectFit: 'contain', borderRadius: '16px' }} />
             ) : (
-              <div style={{ position: 'relative', display: 'inline-block', maxWidth: '100%' }}>
+              <div style={{ position: 'relative', display: 'inline-block', maxWidth: '100%', touchAction: 'none' }}>
                 <canvas 
                   ref={mainCanvasRef} 
                   onPointerDown={handlePointerDown}
                   onPointerMove={handlePointerMove}
                   onPointerUp={handlePointerUp}
                   onPointerLeave={handlePointerUp}
+                  onTouchStart={handlePointerDown}
+                  onTouchMove={handlePointerMove}
+                  onTouchEnd={handlePointerUp}
                   style={{ 
                     width: '100%', 
                     maxHeight: '440px', 
                     objectFit: 'contain', 
                     borderRadius: '16px', 
                     display: 'block',
-                    cursor: 'crosshair' 
+                    cursor: 'crosshair',
+                    touchAction: 'none'
                   }} 
                 />
                 <canvas ref={maskCanvasRef} style={{ display: 'none' }} />
@@ -257,7 +267,7 @@ export default function MagicEraser() {
           </div>
 
           {/* Action Buttons */}
-          <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '12px' }}>
+          <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '12px', flexWrap: 'wrap' }} className="btn-group-responsive">
             <button className="neu-btn" onClick={() => setImageSrc(null)}>
               <RefreshCw size={16} /> Change Photo
             </button>

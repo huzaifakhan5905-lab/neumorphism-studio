@@ -79,7 +79,7 @@ export default function ImageToPdf() {
       <div 
         className="neu-inset" 
         onClick={() => fileInputRef.current?.click()}
-        style={{ padding: '32px 24px', textAlign: 'center', cursor: 'pointer', border: '2px dashed var(--primary-color)', borderRadius: '24px', marginBottom: '24px' }}
+        style={{ padding: '32px 18px', textAlign: 'center', cursor: 'pointer', border: '2px dashed var(--primary-color)', borderRadius: '24px', marginBottom: '20px' }}
       >
         <input type="file" ref={fileInputRef} onChange={handleFileUpload} accept="image/*" multiple style={{ display: 'none' }} />
         <Plus size={32} color="var(--primary-color)" style={{ margin: '0 auto 8px auto' }} />
@@ -104,23 +104,23 @@ export default function ImageToPdf() {
             Document Pages ({images.length} Page{images.length > 1 ? 's' : ''}):
           </h4>
 
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', marginBottom: '24px' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginBottom: '24px' }}>
             {images.map((img, idx) => (
-              <div key={img.id} className="neu-card-sm" style={{ display: 'flex', alignItems: 'center', gap: '16px', padding: '12px' }}>
-                <span className="neu-badge">Page {idx + 1}</span>
-                <img src={img.src} alt={`Page ${idx + 1}`} style={{ width: '60px', height: '60px', objectFit: 'cover', borderRadius: '10px' }} />
-                <span style={{ flex: 1, fontSize: '0.85rem', fontWeight: '600', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+              <div key={img.id} className="neu-card-sm" style={{ display: 'flex', alignItems: 'center', gap: '10px', padding: '10px 12px', flexWrap: 'wrap' }}>
+                <span className="neu-badge" style={{ fontSize: '0.72rem', padding: '4px 8px' }}>Page {idx + 1}</span>
+                <img src={img.src} alt={`Page ${idx + 1}`} style={{ width: '48px', height: '48px', objectFit: 'cover', borderRadius: '10px' }} />
+                <span style={{ flex: 1, minWidth: '120px', fontSize: '0.82rem', fontWeight: '600', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                   {img.name}
                 </span>
 
-                <div style={{ display: 'flex', gap: '6px' }}>
-                  <button className="neu-btn neu-btn-icon" onClick={() => moveImage(idx, 'up')} disabled={idx === 0} style={{ width: '32px', height: '32px' }}>
+                <div style={{ display: 'flex', gap: '4px', marginLeft: 'auto' }}>
+                  <button className="neu-btn neu-btn-icon" onClick={() => moveImage(idx, 'up')} disabled={idx === 0} style={{ width: '36px', height: '36px', minWidth: '36px' }}>
                     <ArrowUp size={14} />
                   </button>
-                  <button className="neu-btn neu-btn-icon" onClick={() => moveImage(idx, 'down')} disabled={idx === images.length - 1} style={{ width: '32px', height: '32px' }}>
+                  <button className="neu-btn neu-btn-icon" onClick={() => moveImage(idx, 'down')} disabled={idx === images.length - 1} style={{ width: '36px', height: '36px', minWidth: '36px' }}>
                     <ArrowDown size={14} />
                   </button>
-                  <button className="neu-btn neu-btn-icon" onClick={() => removeImage(img.id)} style={{ width: '32px', height: '32px', color: 'var(--danger-color)' }}>
+                  <button className="neu-btn neu-btn-icon" onClick={() => removeImage(img.id)} style={{ width: '36px', height: '36px', minWidth: '36px', color: 'var(--danger-color)' }}>
                     <Trash2 size={14} />
                   </button>
                 </div>
@@ -129,7 +129,7 @@ export default function ImageToPdf() {
           </div>
 
           {/* Action Bar */}
-          <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '12px' }}>
+          <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '12px', flexWrap: 'wrap' }} className="btn-group-responsive">
             <button className="neu-btn" onClick={() => setImages([])}>Clear All</button>
             <button className="neu-btn neu-btn-primary" onClick={generateAndDownloadPdf}>
               <Download size={16} /> Export & Save PDF 📄
