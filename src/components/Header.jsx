@@ -1,5 +1,5 @@
 import React from 'react';
-import { Sun, Moon, Coffee, Sparkles, Heart, Menu, X } from 'lucide-react';
+import { Sun, Moon, Coffee, Heart, Menu, X } from 'lucide-react';
 
 export default function Header({ theme, toggleTheme, onOpenUpiModal, isMobileMenuOpen, toggleMobileMenu }) {
   return (
@@ -7,7 +7,7 @@ export default function Header({ theme, toggleTheme, onOpenUpiModal, isMobileMen
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'nowrap', gap: '8px' }}>
         
         {/* Left: Mobile Menu Toggle & Brand Logo */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
           <button 
             className="neu-btn neu-btn-icon mobile-only" 
             onClick={toggleMobileMenu}
@@ -18,8 +18,12 @@ export default function Header({ theme, toggleTheme, onOpenUpiModal, isMobileMen
             {isMobileMenuOpen ? <X size={18} /> : <Menu size={18} />}
           </button>
 
-          <div className="neu-badge" style={{ padding: '6px', borderRadius: '12px' }}>
-            <Sparkles size={18} color="var(--primary-color)" />
+          <div className="neu-badge" style={{ padding: '3px', borderRadius: '14px', background: 'var(--card-bg)' }}>
+            <img 
+              src="/logo.jpg" 
+              alt="NeumoStudio AI Logo" 
+              style={{ width: '34px', height: '34px', borderRadius: '11px', objectFit: 'cover', display: 'block' }} 
+            />
           </div>
           <div>
             <h1 style={{ fontSize: '1.15rem', fontWeight: '800', letterSpacing: '-0.5px', lineHeight: '1.1' }}>
