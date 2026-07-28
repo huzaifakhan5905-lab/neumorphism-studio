@@ -15,7 +15,6 @@ import ResizerCrop from './components/ResizerCrop';
 import ConverterCompress from './components/ConverterCompress';
 import PhotoEnhancer from './components/PhotoEnhancer';
 import WatermarkTool from './components/WatermarkTool';
-import UpiDonateModal from './components/UpiDonateModal';
 import PrivacyModal from './components/PrivacyModal';
 import AdBanner from './components/AdBanner';
 import PwaInstallBanner from './components/PwaInstallBanner';
@@ -46,7 +45,6 @@ export default function App() {
     return localStorage.getItem('neumo_theme') || 'light';
   });
   const [activeTool, setActiveTool] = useState('bg-remover');
-  const [isUpiModalOpen, setIsUpiModalOpen] = useState(false);
   const [isPrivacyModalOpen, setIsPrivacyModalOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -132,7 +130,6 @@ export default function App() {
       <Header 
         theme={theme} 
         toggleTheme={toggleTheme} 
-        onOpenUpiModal={() => setIsUpiModalOpen(true)}
         isMobileMenuOpen={isMobileMenuOpen}
         toggleMobileMenu={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
       />
@@ -142,7 +139,6 @@ export default function App() {
         <SidebarNav 
           activeTool={activeTool} 
           setActiveTool={setActiveTool} 
-          onOpenUpiModal={() => setIsUpiModalOpen(true)}
           isMobileMenuOpen={isMobileMenuOpen}
           closeMobileMenu={() => setIsMobileMenuOpen(false)}
         />
@@ -194,12 +190,6 @@ export default function App() {
           </button>
         </p>
       </footer>
-
-      {/* UPI "Buy Me A Coffee" Modal */}
-      <UpiDonateModal 
-        isOpen={isUpiModalOpen} 
-        onClose={() => setIsUpiModalOpen(false)} 
-      />
 
       {/* Privacy Policy Modal */}
       <PrivacyModal 
