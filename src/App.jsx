@@ -19,7 +19,27 @@ import UpiDonateModal from './components/UpiDonateModal';
 import PrivacyModal from './components/PrivacyModal';
 import AdBanner from './components/AdBanner';
 import PwaInstallBanner from './components/PwaInstallBanner';
+import { 
+  Scissors, Wand2, Eye, Crop, FileCheck2, Sliders, Type, Printer, Eraser, FileText, FileCheck, Lock, Hash 
+} from 'lucide-react';
 import './styles/neumorphism.css';
+
+const MOBILE_TOOLS = [
+  { id: 'bg-remover', label: 'BG Remover', icon: Scissors },
+  { id: 'pdf-compressor', label: 'PDF Compress (200KB)', icon: FileCheck },
+  { id: 'pdf-password', label: 'PDF Lock/Unlock', icon: Lock },
+  { id: 'passport-sheet', label: 'Passport 4x6 Sheet', icon: Printer },
+  { id: 'image-pdf', label: 'Image to PDF', icon: FileText },
+  { id: 'magic-eraser', label: 'Magic Eraser', icon: Eraser },
+  { id: 'pdf-splitter', label: 'PDF Splitter', icon: Scissors },
+  { id: 'pdf-watermark', label: 'PDF Watermark', icon: Hash },
+  { id: 'ai-gen', label: 'AI Image Gen', icon: Wand2 },
+  { id: 'ai-vision', label: 'AI Vision', icon: Eye },
+  { id: 'resizer', label: 'Social Resizer', icon: Crop },
+  { id: 'converter', label: 'KB Converter', icon: FileCheck2 },
+  { id: 'enhancer', label: 'Photo Enhancer', icon: Sliders },
+  { id: 'watermark', label: 'Watermark', icon: Type }
+];
 
 export default function App() {
   const [theme, setTheme] = useState(() => {
@@ -126,16 +146,43 @@ export default function App() {
           isMobileMenuOpen={isMobileMenuOpen}
           closeMobileMenu={() => setIsMobileMenuOpen(false)}
         />
-        <section>
+        
+        <section style={{ width: '100%', minWidth: 0 }}>
+          {/* Mobile Horizontal Quick-Switch Tool Bar */}
+          <div className="mobile-tool-bar">
+            {MOBILE_TOOLS.map(t => {
+              const Icon = t.icon;
+              const isActive = activeTool === t.id;
+              return (
+                <button
+                  key={t.id}
+                  onClick={() => setActiveTool(t.id)}
+                  className={`neu-btn ${isActive ? 'active' : ''}`}
+                  style={{
+                    padding: '8px 14px',
+                    fontSize: '0.8rem',
+                    borderRadius: '20px',
+                    flexShrink: 0,
+                    whiteSpace: 'nowrap'
+                  }}
+                >
+                  <Icon size={14} color={isActive ? 'var(--primary-color)' : 'var(--text-muted)'} />
+                  <span>{t.label}</span>
+                </button>
+              );
+            })}
+          </div>
+
           {renderActiveTool()}
+
           {/* Monetization AdBanner Unit Slot */}
           <AdBanner slotId="main-workspace-ad" />
         </section>
       </main>
 
       {/* Footer */}
-      <footer style={{ textAlign: 'center', padding: '32px 16px', color: 'var(--text-muted)', fontSize: '0.85rem', marginTop: 'auto' }}>
-        <p style={{ fontWeight: '600', marginBottom: '8px' }}>
+      <footer style={{ textAlign: 'center', padding: '24px 16px', color: 'var(--text-muted)', fontSize: '0.85rem', marginTop: 'auto' }}>
+        <p style={{ fontWeight: '600', marginBottom: '8px', lineHeight: '1.4' }}>
           NeumoStudio AI — Built with Soft Neumorphism UI • 100% Free & No Server Paywalls
         </p>
         <p style={{ fontSize: '0.8rem' }}>
