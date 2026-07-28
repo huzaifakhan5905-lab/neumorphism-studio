@@ -17,7 +17,7 @@ export default function PdfCompressor() {
       const sizeInKb = parseFloat((uploadedFile.size / 1024).toFixed(1));
       setFile(uploadedFile);
       setOrigSizeKb(sizeInKb);
-      setTargetKb(Math.min(200, Math.round(sizeInKb * 0.7)));
+      setTargetKb(Math.min(200, Math.max(50, Math.round(sizeInKb * 0.7))));
       setCompressedPdfUrl(null);
       setCompressedSizeKb(0);
     } else {
@@ -39,22 +39,35 @@ export default function PdfCompressor() {
     });
   };
 
+  // Helper function to pad PDF file size to exact target KB
+  const padPdfToTargetKb = async (pdfBlob, targetKbNum) => {
+    const currentBytes = new Uint8Array(await pdfBlob.arrayBuffer());
+    const targetBytesCount = Math.floor(targetKbNum * 1024 * 0.95); // 95% of target KB
+
+    if (currentBytes.byteLength >= targetBytesCount) {
+      return pdfBlob;
+    }
+
+    const paddingNeeded = targetBytesCount - currentBytes.byteLength;
+    if (paddingNeeded <= 0) return pdfBlob;
+
+    const fillString = '0'.repeat(Math.max(0, paddingNeeded - 25));
+    const paddingComment = `\n% PDF-PADDING-${fillString}\n`;
+    const paddingBytes = new TextEncoder().encode(paddingComment);
+
+    const combined = new Uint8Array(currentBytes.byteLength + paddingBytes.byteLength);
+    combined.set(currentBytes, 0);
+    combined.set(paddingBytes, currentBytes.byteLength);
+
+    return new Blob([combined], { type: 'application/pdf' });
+  };
+
   const compressPdfToTarget = async () => {
     if (!file) return;
     setIsProcessing(true);
 
     try {
       const targetSizeNum = parseFloat(targetKb);
-
-      // If Target KB is >= Original KB, no compression needed!
-      if (targetSizeNum >= origSizeKb) {
-        const arrayBuffer = await file.arrayBuffer();
-        const blob = new Blob([arrayBuffer], { type: 'application/pdf' });
-        setCompressedPdfUrl(URL.createObjectURL(blob));
-        setCompressedSizeKb(origSizeKb);
-        setIsProcessing(false);
-        return;
-      }
 
       const pdfjs = await loadPdfJs();
       const arrayBuffer = await file.arrayBuffer();
@@ -99,9 +112,8 @@ export default function PdfCompressor() {
       let lowScale = 0.3;
       let highScale = 2.0;
       let bestBlob = null;
-      let bestKb = 0;
 
-      // Run 4-step binary calibration loop to land as close as possible to target KB (between 80% and 98% of target)
+      // Run 4-step binary calibration loop
       for (let step = 0; step < 4; step++) {
         const midScale = (lowScale + highScale) / 2;
         const midQuality = Math.min(0.92, Math.max(0.3, 0.4 + midScale * 0.25));
@@ -111,21 +123,22 @@ export default function PdfCompressor() {
 
         if (testKb <= targetSizeNum) {
           bestBlob = testBlob;
-          bestKb = testKb;
-          lowScale = midScale; // Try increasing scale to get closer to target KB
+          lowScale = midScale;
         } else {
-          highScale = midScale; // Too big, decrease scale
+          highScale = midScale;
         }
       }
 
-      // Fallback if initial pass was smaller than target
       if (!bestBlob) {
         bestBlob = await renderPdfAtQuality(0.35, 0.35);
-        bestKb = parseFloat((bestBlob.size / 1024).toFixed(1));
       }
 
-      setCompressedPdfUrl(URL.createObjectURL(bestBlob));
-      setCompressedSizeKb(bestKb);
+      // Pad output PDF so its file size lands EXACTLY at 95% of target KB
+      const paddedBlob = await padPdfToTargetKb(bestBlob, targetSizeNum);
+      const finalKb = parseFloat((paddedBlob.size / 1024).toFixed(1));
+
+      setCompressedPdfUrl(URL.createObjectURL(paddedBlob));
+      setCompressedSizeKb(finalKb);
       setIsProcessing(false);
     } catch (err) {
       console.error('PDF Compress error:', err);
@@ -149,7 +162,7 @@ export default function PdfCompressor() {
           <FileCheck color="var(--primary-color)" /> Exact PDF Size Compressor (KB Limit Fixer)
         </h2>
         <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>
-          Use the slider to select your exact required KB limit (e.g., 100KB, 200KB, 500KB) for government exam & college form uploads!
+          Select your exact target KB limit (e.g., 50KB, 100KB, 200KB, 500KB) for government exam & college form uploads!
         </p>
       </div>
 
@@ -162,7 +175,7 @@ export default function PdfCompressor() {
           <input type="file" ref={fileInputRef} onChange={handleFileUpload} accept="application/pdf" style={{ display: 'none' }} />
           <Upload size={32} color="var(--primary-color)" style={{ margin: '0 auto 12px auto' }} />
           <h3 style={{ fontSize: '1.1rem', fontWeight: '700', marginBottom: '4px' }}>Upload PDF to Compress</h3>
-          <p style={{ color: 'var(--text-muted)', fontSize: '0.85rem' }}>Exact KB Limit Slider Compressor</p>
+          <p style={{ color: 'var(--text-muted)', fontSize: '0.85rem' }}>Exact KB Limit Slider & Preset Compressor</p>
         </div>
       ) : (
         <div>
@@ -175,9 +188,9 @@ export default function PdfCompressor() {
             <span className="neu-badge">Original: {origSizeKb} KB</span>
           </div>
 
-          {/* Interactive Target KB Slider */}
+          {/* Preset Buttons & Slider */}
           <div className="neu-card-sm" style={{ marginBottom: '20px' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
               <label style={{ fontSize: '0.85rem', fontWeight: '700', display: 'flex', alignItems: 'center', gap: '6px' }}>
                 <Sliders size={16} color="var(--primary-color)" /> Target PDF Size:
               </label>
@@ -186,10 +199,27 @@ export default function PdfCompressor() {
               </span>
             </div>
 
+            {/* 1-Tap Preset Buttons */}
+            <div style={{ display: 'flex', gap: '8px', marginBottom: '14px', flexWrap: 'wrap' }}>
+              {[35, 50, 100, 200, 500].map(preset => (
+                <button
+                  key={preset}
+                  onClick={() => {
+                    setTargetKb(preset);
+                    setCompressedPdfUrl(null);
+                  }}
+                  className={`neu-btn ${targetKb === preset ? 'active' : ''}`}
+                  style={{ padding: '6px 14px', fontSize: '0.78rem', borderRadius: '12px', flex: 1, minWidth: '60px' }}
+                >
+                  {preset} KB
+                </button>
+              ))}
+            </div>
+
             <input 
               type="range" 
               min="20" 
-              max={Math.max(50, Math.round(origSizeKb))} 
+              max={Math.max(500, Math.round(origSizeKb))} 
               value={targetKb} 
               className="neu-slider" 
               onChange={(e) => {
@@ -201,7 +231,7 @@ export default function PdfCompressor() {
             <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.75rem', color: 'var(--text-muted)', marginTop: '6px' }}>
               <span>20 KB (Min)</span>
               <span style={{ fontWeight: '700', color: 'var(--primary-color)' }}>{targetKb} KB Target</span>
-              <span>{origSizeKb} KB (Max)</span>
+              <span>500 KB+ (Max)</span>
             </div>
           </div>
 
@@ -218,7 +248,7 @@ export default function PdfCompressor() {
           )}
 
           {/* Action Buttons */}
-          <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '12px' }}>
+          <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '12px', flexWrap: 'wrap' }} className="btn-group-responsive">
             <button className="neu-btn" onClick={() => { setFile(null); setCompressedPdfUrl(null); }}>
               <RefreshCw size={16} /> Select Another PDF
             </button>
