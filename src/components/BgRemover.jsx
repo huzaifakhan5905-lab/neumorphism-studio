@@ -65,10 +65,10 @@ export default function BgRemover() {
     <div className="neu-card">
       <div style={{ marginBottom: '20px' }}>
         <h2 style={{ fontSize: '1.4rem', fontWeight: '800', marginBottom: '4px', display: 'flex', alignItems: 'center', gap: '8px' }}>
-          <Sparkles color="var(--primary-color)" /> Studio AI Background Remover (HD Neural Model)
+          <Sparkles color="var(--primary-color)" /> Free AI Background Remover (Without Login & Without Quality Loss)
         </h2>
         <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>
-          Uses Neural AI WebAssembly model to detect hair, face, & body edges with 100% precision.
+          Remove background from photo to transparent PNG or plain white without losing HD quality. 100% free with no login required!
         </p>
       </div>
 
@@ -99,7 +99,7 @@ export default function BgRemover() {
             Click or Drag & Drop Photo Here
           </h3>
           <p style={{ color: 'var(--text-muted)', fontSize: '0.85rem' }}>
-            HD AI Cutout for Portraits, Products, E-Commerce & Studio Photos
+            Remove Background from Portraits, Signatures, E-Commerce & Passport Photos in HD
           </p>
         </div>
       ) : (

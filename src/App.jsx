@@ -15,6 +15,7 @@ import ResizerCrop from './components/ResizerCrop';
 import ConverterCompress from './components/ConverterCompress';
 import PhotoEnhancer from './components/PhotoEnhancer';
 import WatermarkTool from './components/WatermarkTool';
+import SeoFaqSection from './components/SeoFaqSection';
 import UpiDonateModal from './components/UpiDonateModal';
 import PrivacyModal from './components/PrivacyModal';
 import AdBanner from './components/AdBanner';
@@ -58,12 +59,12 @@ export default function App() {
   // Dynamic SEO Document Title & Analytics Ping per tool
   useEffect(() => {
     const titlesMap = {
-      'bg-remover': 'Free AI Background Remover Online | NeumoStudio AI',
+      'bg-remover': 'Remove Background Free Without Login & Without Losing Quality | NeumoStudio AI',
       'pdf-compressor': 'PDF Size Compressor (Exact 200KB / 500KB Slider) | NeumoStudio AI',
       'pdf-password': 'PDF Password Lock & Unlock Tool Online | NeumoStudio AI',
       'pdf-splitter': 'PDF Page Splitter & Extractor | NeumoStudio AI',
       'pdf-watermark': 'PDF Watermark & Page Numbering Tool | NeumoStudio AI',
-      'passport-sheet': 'Passport Photo Printable Sheet Generator (4x6 Print) | NeumoStudio AI',
+      'passport-sheet': 'Remove Background & Make Passport Size Photo 4x6 Sheet | NeumoStudio AI',
       'magic-eraser': 'Magic Object & Watermark Eraser Brush | NeumoStudio AI',
       'image-pdf': 'Image to PDF & Document Merger | NeumoStudio AI',
       'ai-gen': 'AI Text to Image Art Generator | NeumoStudio AI',
@@ -74,7 +75,7 @@ export default function App() {
       'watermark': 'Photo Watermark & Logo Overlay | NeumoStudio AI'
     };
 
-    document.title = titlesMap[activeTool] || 'NeumoStudio AI - Free All-in-One Image & PDF Studio';
+    document.title = titlesMap[activeTool] || 'Remove Background Free Without Login | NeumoStudio AI';
 
     if (window.gtag) {
       window.gtag('event', 'page_view', {
@@ -174,6 +175,9 @@ export default function App() {
           </div>
 
           {renderActiveTool()}
+
+          {/* High-SEO FAQ Section */}
+          <SeoFaqSection />
 
           {/* Monetization AdBanner Unit Slot */}
           <AdBanner slotId="main-workspace-ad" />
