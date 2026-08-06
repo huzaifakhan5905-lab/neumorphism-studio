@@ -2,3 +2,23 @@ User-agent: *
 Allow: /
 
 Sitemap: https://neumorphism-studio.vercel.app/sitemap.xml
+
+# Allow all bots to crawl all tool pages
+Allow: /bg-remover
+Allow: /pdf-compressor
+Allow: /pdf-password
+Allow: /pdf-splitter
+Allow: /pdf-watermark
+Allow: /passport-sheet
+Allow: /magic-eraser
+Allow: /image-pdf
+Allow: /ai-gen
+Allow: /ai-vision
+Allow: /resizer
+Allow: /converter
+Allow: /enhancer
+Allow: /watermark
+
+# Disallow build artifacts
+Disallow: /dist/
+Disallow: /node_modules/
