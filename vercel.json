@@ -1,8 +1,15 @@
 {
   "rewrites": [
-    { "source": "/(.*)", "destination": "/index.html" }
+    { "source": "/((?!ads.txt|sitemap.xml|robots.txt|manifest.json|sw.js|logo.jpg|cover.jpg|thumbnail.jpg).*)", "destination": "/index.html" }
   ],
   "headers": [
+    {
+      "source": "/ads.txt",
+      "headers": [
+        { "key": "Content-Type", "value": "text/plain" },
+        { "key": "Cache-Control", "value": "public, max-age=86400" }
+      ]
+    },
     {
       "source": "/sitemap.xml",
       "headers": [
@@ -13,6 +20,7 @@
     {
       "source": "/robots.txt",
       "headers": [
+        { "key": "Content-Type", "value": "text/plain" },
         { "key": "Cache-Control", "value": "public, max-age=86400" }
       ]
     },
